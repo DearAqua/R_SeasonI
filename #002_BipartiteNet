@@ -1,0 +1,34 @@
+# R_for_fun
+#Punning,Easy,R-programming
+
+#This is what you want to run R for the first time.
+#[Step0]
+install.packages("igraph") 
+install.packages("networkD3")
+
+#When the packages have already installed.
+#[Step1]
+library(igraph)
+library(networkD3)
+
+#[Step2]
+nodes2 <- read.csv("D:\\RRR\\R_for_Fun\\data\\_02_network_NODES.csv", header=T, as.is=T)
+links2 <- read.csv("D:\\RRR\\R_for_Fun\\data\\_02_network_EDGES.csv", header=T, row.names=1)
+head(nodes2)
+head(links2)
+
+#[Step3]
+links2 <- as.matrix(links2)
+net2 <- graph_from_incidence_matrix(links2)
+net2
+
+#[Step4]
+V(net2)$color <- c("steel blue", "orange")[V(net2)$type+1]
+V(net2)$shape <- c("square", "circle")[V(net2)$type+1]
+V(net2)$label <- ""
+V(net2)$label[V(net2)$type==F] <- nodes2$media[V(net2)$type==F] 
+V(net2)$label.cex=.6
+V(net2)$label.font=2
+
+#[Step5]
+plot(net2, vertex.label=NA, vertex.size=7, layout=layout.bipartite) 
