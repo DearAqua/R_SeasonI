@@ -1,0 +1,43 @@
+# R_for_fun
+#Punning,Easy,R-programming
+
+#[Step0]
+par( mfcol = c(1, 1), bg = "white", tcl = 0.2, cex.axis = 0.9,
+   cex.lab = 1.1, omi = c(0.5, 0.5, 0.5, 0.5), mar = c(4, 4, 2, 2),
+   las = 1, pty = "s", mgp = c(2.5, 0.5, 0) )
+
+#[Step1]
+plot( Richness ~ Density, tcl = 0.3, xlim = c(4, 9),
+   ylim = c(0, 6.5), pch = 1, xlab = "log ( Density + 1 )", 
+   ylab = "Phenotypic richness", cex = 1, xaxt = "n", yaxt = "n" )
+   
+#[Step2]   
+u <- par( "usr" )   
+
+#[Step3]
+rect( u[1], u[3], u[2], u[4], col = "cornsilk" )
+
+#[Step4]
+abline( h = c(-1, 0, 1, 2, 3, 4, 5, 6), lty = 1, lwd = 1.5, col = "white")
+abline( v = c(3, 4, 5, 6, 7, 8, 9), lty = 1, lwd = 1.5, col = "white" )
+
+#[Step5]
+points( Density, Richness, cex = 1.1, pch = 19, col = "gray60" )
+
+#[Step6]
+mod <- glm( Richness ~ Density, family = poisson() )
+x <- seq( 3, 10, len=500 )                      
+pre <- predict( mod, data.frame(Density = x) )
+p <- exp( pre )                                     
+lines( x, p, lwd = 2.5, col = "tomato3" )
+
+#[Step7]
+text( 4, 5.5, expression(pseudo-R^2==0.457), cex = 1, pos = 4 )
+text( 4, 4.8, expression(p<0.001), cex = 1, pos = 4 )
+
+#[Step8]
+axis( 1, tick = TRUE, label = TRUE )
+axis( 2, tick = TRUE, label = TRUE )
+
+#[Step9]
+box( )
